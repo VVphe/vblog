@@ -1,0 +1,2 @@
+@RequestParam("auth") String auth, @RequestParam("title") String title, @RequestParam("content") String content,
+                       @RequestParam("description") String description, @RequestParam("category") String category)
