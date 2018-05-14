@@ -69,4 +69,9 @@ public class ArticleServiceImpl implements ArticleService {
     public List<Article> getNewestArticle(int offset, int limit) {
         return articleDao.selectNewsetArticle(offset, limit);
     }
+
+    @Override
+    public void updateCommentsCnt(int id, int commentsCnt) {
+        articleDao.updateCommentsCnt(id, commentsCnt);
+    }
 }

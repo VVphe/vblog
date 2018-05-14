@@ -51,9 +51,9 @@ public class ArticleController {
 
     @CrossOrigin(origins = "*", maxAge = 3600)
     @GetMapping("/hotestarticle")
-    public List<Article> gethotestarticle() {
+    public List<Article> gethotestarticle(@RequestParam("start") int start, @RequestParam("end") int end) {
         List<Article> hotArticles = new ArrayList<>();
-        Set<String> set = jedisService.zrevrange("hotArticles", 0, 9);
+        Set<String> set = jedisService.zrevrange("hotArticles", start, end);
         for(String s : set) {
             int articleid = Integer.parseInt(s.split(":")[1]);
             Article article = articleService.getArticleById(articleid);
@@ -61,6 +61,12 @@ public class ArticleController {
         }
 
         return hotArticles;
+    }
+
+    @CrossOrigin(origins = "*", maxAge = 3600)
+    @GetMapping("/readcount")
+    public int readcount(@RequestParam("articleid") int articleid) {
+        return jedisService.getValue("hotArticles", articleid);
     }
 
     @CrossOrigin(origins = "*", maxAge = 3600)
@@ -78,6 +84,12 @@ public class ArticleController {
     @GetMapping("/categorycnt")
     public int categorycnt(@RequestParam("category") String category) {
         return articleService.getCategoryArticleCnt(category);
+    }
+
+    @CrossOrigin(origins = "*", maxAge = 3600)
+    @PostMapping("/updatecomment")
+    public void updatecomment(@RequestParam("articleid") int articleid, @RequestParam("commentsCnt") int commentsCnt) {
+        articleService.updateCommentsCnt(articleid, commentsCnt);
     }
 
 }

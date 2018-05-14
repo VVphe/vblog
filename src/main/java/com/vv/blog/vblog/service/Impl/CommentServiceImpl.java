@@ -43,4 +43,9 @@ public class CommentServiceImpl implements CommentService {
     public int selectCmCntByArticleid(int articleid) {
         return commentDao.selectCmCntByArticleid(articleid);
     }
+
+    @Override
+    public List<Comment> selectPageComment(int articleid, int offset, int limit) {
+        return commentDao.selectPageComment(articleid, offset, limit);
+    }
 }

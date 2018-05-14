@@ -14,4 +14,6 @@ public interface CommentService {
 
     int selectCmCntByArticleid(int articleid);
 
+    List<Comment> selectPageComment(int articleid, int offset, int limit);
+
 }

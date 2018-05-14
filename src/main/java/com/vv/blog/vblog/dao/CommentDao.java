@@ -15,7 +15,7 @@ public interface CommentDao {
     String SELECT_FIELD = "cmid," + INSERT_FIELD;
 
     @Insert({"insert into", TABLE_NAME, "(", INSERT_FIELD, ") values(#{cmcontent},#{cmdate},#{username},#{articleid},#{stars})"})
-    Comment insertComment(Comment comment);
+    void insertComment(Comment comment);
 
     @Update({"update", TABLE_NAME, "set stars=#{stars} where cmid=#{cmid}"})
     void updateCommentsCnt(@Param("cmid") int cmid, @Param("stars") int stars);
@@ -23,7 +23,10 @@ public interface CommentDao {
     @Select({"select", SELECT_FIELD, "from", TABLE_NAME, "where articleid=#{articleid}"})
     List<Comment> selectCommentByArticleid(@Param("articleid") int articleid);
 
-    @Select({"select count(id) from", TABLE_NAME, "where articleid=#{articleid}"})
+    @Select({"select count(cmid) from", TABLE_NAME, "where articleid=#{articleid}"})
     int selectCmCntByArticleid(@Param("articleid") int articleid);
+
+    @Select({"select", SELECT_FIELD, "from", TABLE_NAME, "where articleid=#{articleid} order by cmdate desc limit #{offset},#{limit}"})
+    List<Comment> selectPageComment(@Param("articleid") int articleid, @Param("offset") int offset, @Param("limit") int limit);
 
 }

@@ -21,4 +21,6 @@ public interface ArticleService {
     Article getArticleById(int id);
 
     List<Article> getNewestArticle(int offset, int limit);
+
+    void updateCommentsCnt(int id, int commentsCnt);
 }
