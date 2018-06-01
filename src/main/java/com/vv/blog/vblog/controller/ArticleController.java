@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/article")
 public class ArticleController {
@@ -67,6 +69,12 @@ public class ArticleController {
     @GetMapping("/readcount")
     public int readcount(@RequestParam("articleid") int articleid) {
         return jedisService.getValue("hotArticles", articleid);
+    }
+
+    @CrossOrigin(origins = "*", maxAge = 3600)
+    @GetMapping("/categoryreadcount")
+    public Map<String, Integer> categoryreadcount(@RequestParam("category") String category) {
+        return jedisService.getCategoryValue("categoryCount", category);
     }
 
     @CrossOrigin(origins = "*", maxAge = 3600)

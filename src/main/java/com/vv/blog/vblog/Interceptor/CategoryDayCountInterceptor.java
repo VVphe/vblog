@@ -1,6 +1,7 @@
 package com.vv.blog.vblog.Interceptor;
 
 import com.vv.blog.vblog.Utils.JedisUtil;
+import com.vv.blog.vblog.entity.Article;
 import com.vv.blog.vblog.service.ArticleService;
 import com.vv.blog.vblog.service.Impl.JedisService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +12,11 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 @Component
-public class ArticleHotInterceptor implements HandlerInterceptor{
+public class CategoryDayCountInterceptor implements HandlerInterceptor{
 
     @Autowired
     private JedisService jedisService;
@@ -26,13 +29,20 @@ public class ArticleHotInterceptor implements HandlerInterceptor{
         //String uri = httpServletRequest.getServletPath().split("/")[2];
         String uri = httpServletRequest.getParameter("articleid");
 
-        if(articleService.getArticleById(Integer.parseInt(uri)) != null) {
+        Article article = articleService.getArticleById(Integer.parseInt(uri));
 
-            //文章点击量
-            String uriKey = JedisUtil.getClickCountKey(uri);
+        if(article != null) {
 
-            jedisService.zincrby("hotArticles", uriKey);
+            Calendar calendar = Calendar.getInstance();
+
+            String day = new SimpleDateFormat("yyyy-MM-dd ").format(calendar.getTime());
+            String key = article.getCategory() + day;
+
+            String uriKey = JedisUtil.getCategoryDayCountKey(key);
+
+            jedisService.zincrby("categoryCount", uriKey);
         }
+
         return true;
     }
 

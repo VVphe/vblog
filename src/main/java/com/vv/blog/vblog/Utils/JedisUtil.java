@@ -13,4 +13,8 @@ public class JedisUtil {
     public static String getClickCountKey(String url){
         return BIZ_CLICK+SPLITE+url+SPLITE+"COUNT";
     }
+
+    public static String getCategoryDayCountKey(String category) {
+        return BIZ_CLICK+SPLITE+category+SPLITE+"COUNT";
+    }
 }
