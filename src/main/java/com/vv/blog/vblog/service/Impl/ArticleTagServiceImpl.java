@@ -26,8 +26,8 @@ public class ArticleTagServiceImpl implements ArticleTagService {
         ArticleTag articleTag = new ArticleTag();
         articleTag.setTagid(tagid);
         articleTag.setArticleid(articleid);
-
-        return articleTagDao.insertArticleTag(articleTag);
+        articleTagDao.insertArticleTag(articleTag);
+        return articleTag;
     }
 
     @Override

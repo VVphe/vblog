@@ -24,6 +24,9 @@ public interface ArticleDao {
     @Select({"select", SELECT_FIELD, "from", TABLE_NAME, "where id=#{id}"})
     Article selectArticleById(@Param("id") int id);
 
+    @Select({"select", SELECT_FIELD, "from", TABLE_NAME, "where title=#{title} and auth=#{auth}"})
+    Article selectArticleByTitle(@Param("title") String title, @Param("auth") String auth);
+
     @Select({"select", SELECT_FIELD, "from", TABLE_NAME, "where category=#{category} and auth=#{username}"})
     List<Article> selectArticleByCategory(@Param("username") String username, @Param("category") String category);
 

@@ -4,7 +4,9 @@ import com.vv.blog.vblog.dao.TagDao;
 import com.vv.blog.vblog.entity.Tag;
 import com.vv.blog.vblog.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class TagServiceImpl implements TagService {
 
     @Autowired

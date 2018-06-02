@@ -20,6 +20,8 @@ public interface ArticleService {
 
     Article getArticleById(int id);
 
+    Article getArticleByTitle(String title, String auth);
+
     List<Article> getNewestArticle(int offset, int limit);
 
     void updateCommentsCnt(int id, int commentsCnt);

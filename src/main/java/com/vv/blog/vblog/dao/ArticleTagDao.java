@@ -18,7 +18,7 @@ public interface ArticleTagDao {
     String TAG_FIELD = "tagid, tagname";
 
     @Insert({"insert into", TABLE_NAME, "(", FIELD, ") values(#{tagid},#{articleid})"})
-    ArticleTag insertArticleTag(ArticleTag articleTag);
+    void insertArticleTag(ArticleTag articleTag);
 
     @Select({"select articleid from article_tag natural join tag where tagname=#{tagname}"})
     List<Integer> selectArticlesOfTag(String tagname);

@@ -66,6 +66,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public Article getArticleByTitle(String title, String auth) {
+        return articleDao.selectArticleByTitle(title, auth);
+    }
+
+    @Override
     public List<Article> getNewestArticle(int offset, int limit) {
         return articleDao.selectNewsetArticle(offset, limit);
     }

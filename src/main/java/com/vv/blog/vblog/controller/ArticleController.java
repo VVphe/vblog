@@ -2,8 +2,11 @@ package com.vv.blog.vblog.controller;
 
 import com.vv.blog.vblog.entity.Article;
 import com.vv.blog.vblog.entity.ArticleTag;
+import com.vv.blog.vblog.entity.Tag;
 import com.vv.blog.vblog.service.ArticleService;
+import com.vv.blog.vblog.service.ArticleTagService;
 import com.vv.blog.vblog.service.Impl.JedisService;
+import com.vv.blog.vblog.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,10 +26,29 @@ public class ArticleController {
     @Autowired
     private JedisService jedisService;
 
+    @Autowired
+    private TagService tagService;
+
+    @Autowired
+    private ArticleTagService articleTagService;
+
     @PostMapping("/publish")
     public Article publish(@RequestParam("auth") String auth, @RequestParam("title") String title, @RequestParam("content") String content,
-                           @RequestParam("description") String description, @RequestParam("category") String category) {
-        return articleService.addArticle(auth, title, content, description, category);
+                           @RequestParam("description") String description, @RequestParam("category") String category, @RequestParam("tags") List<String> tags) {
+        Article article = articleService.addArticle(auth, title, content, description, category);
+        Article copy = articleService.getArticleByTitle(title, auth);
+        for(String tag: tags) {
+            Tag mTag;
+            if(tagService.selectTagByName(tag) == null) {
+                mTag = tagService.addTag(tag);
+                articleTagService.addArticleTag(mTag.getTagid(), copy.getId());
+            } else {
+                mTag = tagService.selectTagByName(tag);
+                articleTagService.addArticleTag(mTag.getTagid(), copy.getId());
+            }
+        }
+
+        return article;
     }
 
     @PostMapping("/delete")
@@ -59,7 +81,10 @@ public class ArticleController {
         for(String s : set) {
             int articleid = Integer.parseInt(s.split(":")[1]);
             Article article = articleService.getArticleById(articleid);
-            hotArticles.add(article);
+            if(article != null) {
+                hotArticles.add(article);
+            }
+
         }
 
         return hotArticles;
