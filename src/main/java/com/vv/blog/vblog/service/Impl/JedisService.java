@@ -57,7 +57,7 @@ public class JedisService implements InitializingBean {
         Map<String, Integer> map = new LinkedHashMap<>();
         for(int i = 0; i < 7; i ++) {
             calendar.add(Calendar.DATE, -1);
-            String day = new SimpleDateFormat( "yyyy-MM-dd ").format(calendar.getTime());
+            String day = new SimpleDateFormat( "yyyy-MM-dd").format(calendar.getTime());
             String urlKey = JedisUtil.getCategoryDayCountKey(category + day);
             if(jedis.zscore(key, urlKey) == null) {
                 map.put(day, 0);

@@ -35,7 +35,7 @@ public class CategoryDayCountInterceptor implements HandlerInterceptor{
 
             Calendar calendar = Calendar.getInstance();
 
-            String day = new SimpleDateFormat("yyyy-MM-dd ").format(calendar.getTime());
+            String day = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
             String key = article.getCategory() + day;
 
             String uriKey = JedisUtil.getCategoryDayCountKey(key);
