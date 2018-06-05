@@ -16,7 +16,7 @@ public class CommentController {
 
     @CrossOrigin(origins = "*", maxAge = 3600)
     @PostMapping("/publish")
-    public Comment publish(@RequestParam("cmcontent") String cmcontent, @RequestParam("username") String username,
+    public Comment publishComment(@RequestParam("cmcontent") String cmcontent, @RequestParam("username") String username,
                            @RequestParam("articleid") int articleid) {
         return commentService.insertComment(cmcontent, username, articleid);
     }

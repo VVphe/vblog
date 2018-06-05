@@ -33,7 +33,7 @@ public class ArticleController {
     private ArticleTagService articleTagService;
 
     @PostMapping("/publish")
-    public Article publish(@RequestParam("auth") String auth, @RequestParam("title") String title, @RequestParam("content") String content,
+    public Article publishArticle(@RequestParam("auth") String auth, @RequestParam("title") String title, @RequestParam("content") String content,
                            @RequestParam("description") String description, @RequestParam("category") String category, @RequestParam("tags") List<String> tags) {
         Article article = articleService.addArticle(auth, title, content, description, category);
         Article copy = articleService.getArticleByTitle(title, auth);

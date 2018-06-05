@@ -16,7 +16,7 @@ public class ReplyController {
 
     @CrossOrigin(origins = "*", maxAge = 3600)
     @PostMapping("/publish")
-    Reply publish(@RequestParam("cmid") int cmid, @RequestParam("replyid") int replyid, @RequestParam("replytype") String replytype,
+    Reply publishReply(@RequestParam("cmid") int cmid, @RequestParam("replyid") int replyid, @RequestParam("replytype") String replytype,
                   @RequestParam("replycontent") String replycontent, @RequestParam("fromuser") String fromuser, @RequestParam("touser") String touser) {
 
         return replyService.addReply(cmid, replyid, replytype, replycontent, fromuser, touser);
