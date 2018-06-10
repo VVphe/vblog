@@ -2,6 +2,7 @@ package com.vv.blog.vblog.dao.Impl;
 
 import com.vv.blog.vblog.Utils.JwtUtil;
 import com.vv.blog.vblog.dao.TokenManager;
+import com.vv.blog.vblog.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -15,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 public class RedisTokenManager implements TokenManager {
+
     private RedisTemplate redis;
 
     @Autowired
@@ -23,6 +25,9 @@ public class RedisTokenManager implements TokenManager {
         this.redis = redis;
         redis.setKeySerializer(new JdkSerializationRedisSerializer());
     }
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public String createToken(String username) {
@@ -36,8 +41,11 @@ public class RedisTokenManager implements TokenManager {
         try {
             Claims claims = Jwts.parser().setSigningKey("base64EncodedSecretKey").parseClaimsJws(authentication).getBody();
             String username = claims.getSubject();
-            redis.boundValueOps(username).expire(72, TimeUnit.HOURS);
-            return true;
+            String role = userService.selectByUsername(username).getRole();
+            if (role.equals("admin")) {
+                redis.boundValueOps(username).expire(72, TimeUnit.HOURS);
+                return true;
+            }
         }catch (ExpiredJwtException e1) {
             e1.printStackTrace();
         } catch (Exception e) {

@@ -41,7 +41,8 @@ public class ArticleController {
             Tag mTag;
             if(tagService.selectTagByName(tag) == null) {
                 mTag = tagService.addTag(tag);
-                articleTagService.addArticleTag(mTag.getTagid(), copy.getId());
+                Tag mTag_new = tagService.selectTagByName(tag);
+                articleTagService.addArticleTag(mTag_new.getTagid(), copy.getId());
             } else {
                 mTag = tagService.selectTagByName(tag);
                 articleTagService.addArticleTag(mTag.getTagid(), copy.getId());

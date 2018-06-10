@@ -42,10 +42,11 @@ public class JedisService implements InitializingBean {
         String urlKey = JedisUtil.getClickCountKey(id);
         if(jedis.zscore(key, urlKey) == null) {
             return 0;
+        } else {
+            int value = jedis.zscore(key, urlKey).intValue();
+            jedis.close();
+            return value;
         }
-        int value = jedis.zscore(key, urlKey).intValue();
-        jedis.close();
-        return value;
     }
 
     //获得类目近一周每天的总阅读量

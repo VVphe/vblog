@@ -22,6 +22,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         String token = request.getHeader(Constants.AUTHORIZATION_HEADER_NAME);
+        System.out.println(token);
 
         //String token = auth.substring(7);
 
