@@ -42,8 +42,8 @@ public class RedisTokenManager implements TokenManager {
             Claims claims = Jwts.parser().setSigningKey("base64EncodedSecretKey").parseClaimsJws(authentication).getBody();
             String username = claims.getSubject();
             String role = userService.selectByUsername(username).getRole();
+            redis.boundValueOps(username).expire(72, TimeUnit.HOURS);
             if (role.equals("admin")) {
-                redis.boundValueOps(username).expire(72, TimeUnit.HOURS);
                 return true;
             }
         }catch (ExpiredJwtException e1) {

@@ -3,8 +3,7 @@ package com.vv.blog.vblog.service.Impl;
 import com.vv.blog.vblog.Utils.JedisUtil;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.*;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -17,7 +16,14 @@ public class JedisService implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        jedisPool = new JedisPool("39.108.184.172", 6379);
+        // 池基本配置
+        JedisPoolConfig config = new JedisPoolConfig();
+        config.setMaxIdle(5);
+        config.setMaxWaitMillis(10001);
+        config.setTestOnBorrow(false);
+
+        jedisPool = new JedisPool(config,"39.108.184.172", 6379);
+
     }
 
     public double zincrby(String key,String value){
@@ -40,12 +46,23 @@ public class JedisService implements InitializingBean {
         Jedis jedis = jedisPool.getResource();
         String id = String.valueOf(uri);
         String urlKey = JedisUtil.getClickCountKey(id);
-        if(jedis.zscore(key, urlKey) == null) {
-            return 0;
-        } else {
+//        if(jedis.zscore(key, urlKey) == null) {
+//            return 0;
+//        } else {
+//            int value = jedis.zscore(key, urlKey).intValue();
+//            jedis.close();
+//            return value;
+//        }
+//        System.out.println("id is:");
+//        System.out.println(jedis.zscore(key, urlKey));
+
+        if(jedis.zrank(key, urlKey) != null) {
             int value = jedis.zscore(key, urlKey).intValue();
             jedis.close();
             return value;
+        } else {
+            jedis.close();
+            return 0;
         }
     }
 

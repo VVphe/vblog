@@ -21,10 +21,14 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        String token = request.getHeader(Constants.AUTHORIZATION_HEADER_NAME);
-        System.out.println(token);
 
-        //String token = auth.substring(7);
+        if(!request.getMethod().equals("OPTIONS")) {
+            String token = request.getHeader(Constants.AUTHORIZATION_HEADER_NAME);
+            System.out.println(request.getMethod());
+            System.out.println(token);
+
+
+            //String token = auth.substring(7);
 
 //        try {
 //            JwtUtil.checkToken(token);
@@ -32,9 +36,9 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 //        }catch (Exception e) {
 //            throw new ServletException(e.getMessage());
 //        }
-        if(manager.getToken(token)) {
-            return true;
-        }
-        return false;
+            if (manager.getToken(token)) {
+                return true;
+            } else return false;
+        } else return true;
     }
 }

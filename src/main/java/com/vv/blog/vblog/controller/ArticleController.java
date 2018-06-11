@@ -77,6 +77,7 @@ public class ArticleController {
     @CrossOrigin(origins = "*", maxAge = 3600)
     @GetMapping("/hotestarticle")
     public List<Article> gethotestarticle(@RequestParam("start") int start, @RequestParam("end") int end) {
+
         List<Article> hotArticles = new ArrayList<>();
         Set<String> set = jedisService.zrevrange("hotArticles", start, end);
         for(String s : set) {
@@ -85,7 +86,6 @@ public class ArticleController {
             if(article != null) {
                 hotArticles.add(article);
             }
-
         }
 
         return hotArticles;

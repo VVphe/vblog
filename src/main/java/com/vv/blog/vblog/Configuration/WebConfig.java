@@ -28,7 +28,7 @@ public class WebConfig extends WebMvcConfigurerAdapter{
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         List<String> patterns = new ArrayList<>();
-        patterns.add("/login");
+        //patterns.add("/login");
         patterns.add("/article/publish");
 
         registry.addInterceptor(authInterceptor).addPathPatterns(patterns);
