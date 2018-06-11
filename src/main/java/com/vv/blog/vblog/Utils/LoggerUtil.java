@@ -66,7 +66,7 @@ public class LoggerUtil {
                 Article article = articleService.getArticleById(articleId);
                 String articleTitle = article.getTitle();
 
-                log = username + "replied the article < " + articleTitle + " > at " + dateString;
+                log = username + " replied the article < " + articleTitle + " > at " + dateString;
                 logService.addLog(log, date);
 
                 break;
