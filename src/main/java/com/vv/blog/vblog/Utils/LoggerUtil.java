@@ -70,44 +70,16 @@ public class LoggerUtil {
                 logService.addLog(log, date);
 
                 break;
+
+            case "publishEvent":
+               String eventTitle = args.get(1).toString();
+               String start = args.get(2).toString();
+
+               log = "vv added an event named with < " + eventTitle + " > started from " + start + " at " + dateString;
+               logService.addLog(log, date);
         }
     }
 
-//    public String getContent(Object[] args, String methonName) {
-//        if(args == null) return null;
-//        StringBuffer rs = new StringBuffer();
-//        rs.append(methonName);
-//        String className = null;
-//        int index = 1;
-//
-//        for (Object info : args) {
-//            // 获取对象类型
-//            className = info.getClass().getName();
-//            className = className.substring(className.lastIndexOf(".") + 1);
-//            rs.append("[参数" + index + "，类型:" + className + "，值:");
-//
-//            Method[] methods = info.getClass().getDeclaredMethods();
-//
-//            for (Method method : methods) {
-//                String methodName = method.getName();
-//                // 判断是不是get方法
-////                if (methodName.indexOf("get") == -1) {
-////                    continue;// 不处理
-////                }
-//                Object rsValue = null;
-//                try {
-//
-//                    rsValue = method.invoke(info);
-//                } catch (Exception e) {
-//                    continue;
-//                }
-//
-//                rs.append("(" + methodName + ":" + rsValue + ")");
-//            }
-//            rs.append("]");
-//            index++;
-//        }
-//        return rs.toString();
-//    }
+
 
 }

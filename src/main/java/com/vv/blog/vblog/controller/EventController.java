@@ -18,7 +18,7 @@ public class EventController {
     private EventService eventService;
 
     @PostMapping("/publish")
-    public Event publish(@RequestParam("eventid") String eventid, @RequestParam("eventtitle") String eventtitle, @RequestParam("start") String start, @RequestParam("end") String end) {
+    public Event publishEvent(@RequestParam("eventid") String eventid, @RequestParam("eventtitle") String eventtitle, @RequestParam("start") String start, @RequestParam("end") String end) {
         return eventService.addEvent(eventid, eventtitle, start, end);
     }
 

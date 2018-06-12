@@ -19,7 +19,7 @@ public interface LogDao {
     @Insert({"insert into", TABLE_NAME, "(", INSERT_FIELD, ") values (#{logcontent},#{logdate})"})
     void insertLog(Log log);
 
-    @Select({"select", SELECT_FIELD, "from", TABLE_NAME})
+    @Select({"select", SELECT_FIELD, "from", TABLE_NAME, "order by logdate desc limit 0,20"})
     List<Log> selectLogs();
 
 }
