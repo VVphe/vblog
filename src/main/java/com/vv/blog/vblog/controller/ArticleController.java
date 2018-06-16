@@ -126,4 +126,9 @@ public class ArticleController {
         articleService.updateCommentsCnt(articleid, commentsCnt);
     }
 
+    @GetMapping("/search")
+    public List<Article> search(@RequestParam("key") String key) {
+        return articleService.searchArticleByName(key);
+    }
+
 }

@@ -48,4 +48,7 @@ public interface ArticleDao {
     @Select({"select", SELECT_FIELD, "from", TABLE_NAME, "order by date desc limit #{offset},#{limit}"})
     List<Article> selectNewsetArticle(@Param("offset") int offset, @Param("limit") int limit);
 
+    @Select({"select", SELECT_FIELD, "from", TABLE_NAME, "where title like CONCAT('%',#{key},'%') order by date desc"})
+    List<Article> searchArticleByName(@Param("key") String key);
+
 }

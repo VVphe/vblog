@@ -79,4 +79,9 @@ public class ArticleServiceImpl implements ArticleService {
     public void updateCommentsCnt(int id, int commentsCnt) {
         articleDao.updateCommentsCnt(id, commentsCnt);
     }
+
+    @Override
+    public List<Article> searchArticleByName(String key) {
+        return articleDao.searchArticleByName(key);
+    }
 }
