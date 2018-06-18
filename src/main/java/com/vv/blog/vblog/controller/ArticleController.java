@@ -52,7 +52,7 @@ public class ArticleController {
         return article;
     }
 
-    @PostMapping("/delete")
+    @GetMapping("/delete")
     public Article delete(@RequestParam("id") int id) {
         return articleService.deleteArticle(id);
     }
@@ -71,6 +71,7 @@ public class ArticleController {
     @CrossOrigin(origins = "*", maxAge = 3600)
     @GetMapping("/readarticle")
     public Article getArticle(@RequestParam("articleid") int articleid) {
+        System.out.println("read me");
         return articleService.getArticleById(articleid);
     }
 

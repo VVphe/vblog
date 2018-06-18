@@ -24,7 +24,7 @@ public interface EventDao {
     @Update({"update", TABLE_NAME, "set start=#{start},end=#{end} where eventid=#{eventid}"})
     void updateEvent(@Param("eventid") String eventid, @Param("start") String start, @Param("end") String end);
 
-    @Delete({"delete from", TABLE_NAME, "where eventid=#{eventid}"})
+    @Update({"update", TABLE_NAME, "set eventtitle=CONCAT(eventtitle,'(finished)') where eventid=#{eventid}"})
     void deleteEvent(@Param("eventid") String eventid);
 
 }

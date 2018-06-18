@@ -30,6 +30,7 @@ public class WebConfig extends WebMvcConfigurerAdapter{
         List<String> patterns = new ArrayList<>();
         //patterns.add("/login");
         patterns.add("/article/publish");
+        patterns.add("/article/delete");
         patterns.add("/event/publish");
         patterns.add("/event/update");
         patterns.add("/event/delete");
