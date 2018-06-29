@@ -19,10 +19,10 @@ public class JedisService implements InitializingBean {
         // 池基本配置
         JedisPoolConfig config = new JedisPoolConfig();
         config.setMaxIdle(5);
-        config.setMaxWaitMillis(10001);
+        config.setMaxWaitMillis(50001);
         config.setTestOnBorrow(false);
 
-        jedisPool = new JedisPool(config,"39.108.184.172", 6379);
+        jedisPool = new JedisPool("39.108.184.172", 6379);
 
     }
 
@@ -83,6 +83,8 @@ public class JedisService implements InitializingBean {
                 map.put(day, jedis.zscore(key, urlKey).intValue());
             }
         }
+
+        jedis.close();
 
         return map;
     }
